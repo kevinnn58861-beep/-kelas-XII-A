@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Resmi Kelas XII A</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        body { font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
+        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .active-page { background-color: #2563eb !important; color: white !important; }
+    </style>
+</head>
+<body class="bg-[#0f172a] text-white">
+
+    <nav class="p-6 flex justify-between items-center max-w-6xl mx-auto sticky top-0 z-50 bg-[#0f172a]/80 backdrop-blur-md">
+        <h1 class="text-2xl font-bold tracking-tighter text-blue-400">CLASSCORE.</h1>
+        <div class="space-x-6 hidden md:block">
+            <a href="#home" class="hover:text-blue-400 transition">Home</a>
+            <a href="#gallery" class="hover:text-blue-400 transition">Gallery</a>
+            <a href="#struktur" class="hover:text-blue-400 transition">Struktur</a>
+        </div>
+    </nav>
+
+    <section id="home" class="py-24 text-center px-4">
+        <h2 class="text-5xl md:text-7xl font-extrabold mb-4 bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent uppercase">
+            XII A - THE LEGENDS
+        </h2>
+        <div class="flex justify-center">
+            <a href="#struktur" class="bg-blue-600 hover:bg-blue-700 px-10 py-3 rounded-full font-semibold transition shadow-lg shadow-blue-500/30">
+                Lihat Struktur
+            </a>
+        </div>
+    </section>
+
+    <section id="gallery" class="py-20 max-w-6xl mx-auto px-6">
+        <div class="text-center mb-12">
+            <p class="text-blue-400 font-semibold tracking-widest uppercase text-sm">Our Memories</p>
+            <h2 class="text-4xl font-bold mt-2 uppercase">Moments</h2>
+            <div class="h-1 w-20 bg-blue-500 mx-auto mt-4 rounded-full"></div>
+        </div>
+        <div id="gallery-wrapper" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
+        <div class="flex justify-center mt-12 gap-2">
+            <button onclick="renderGallery(1)" id="btn-1" class="page-nav w-10 h-10 rounded-full glass flex items-center justify-center text-sm font-bold transition">1</button>
+            <button onclick="renderGallery(2)" id="btn-2" class="page-nav w-10 h-10 rounded-full glass flex items-center justify-center text-sm font-bold transition">2</button>
+            <button onclick="renderGallery(3)" id="btn-3" class="page-nav w-10 h-10 rounded-full glass flex items-center justify-center text-sm font-bold transition">3</button>
+        </div>
+    </section>
+
+    <section id="struktur" class="py-20 bg-white/5">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold uppercase">Struktur & Daftar Siswa</h2>
+                <div class="h-1 w-20 bg-emerald-500 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div id="wali-kelas-container" class="flex justify-center mb-20"></div>
+
+            <div id="pengurus-inti" class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-24 text-center"></div>
+
+            <div class="text-center mb-10"><h3 class="text-xl font-semibold text-slate-500 italic uppercase">Daftar Siswa (34)</h3></div>
+            <div id="student-list" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-6"></div>
+        </div>
+    </section>
+
+    <script>
+        // ==========================================
+        // 1. DATA FOTO GALERI (34 MOMENTS)
+        // Ganti 'nama-file.jpg' sesuai file di GitHub kamu
+        // ==========================================
+        const galleryData = [
+            { page: 1, src: 'moment1.jpg', title: 'Moment 1' },
+            { page: 1, src: 'moment2.jpg', title: 'Moment 2' },
+            { page: 1, src: 'moment3.jpg', title: 'Moment 3' },
+            { page: 1, src: 'moment4.jpg', title: 'Moment 4' },
+            { page: 1, src: 'moment5.jpg', title: 'Moment 5' },
+            { page: 1, src: 'moment6.jpg', title: 'Moment 6' },
+            { page: 1, src: 'moment7.jpg', title: 'Moment 7' },
+            { page: 1, src: 'moment8.jpg', title: 'Moment 8' },
+            { page: 1, src: 'moment9.jpg', title: 'Moment 9' },
+            { page: 1, src: 'moment10.jpg', title: 'Moment 10' },
+            { page: 1, src: 'moment11.jpg', title: 'Moment 11' },
+            { page: 1, src: 'moment12.jpg', title: 'Moment 12' },
+            // Halaman 2
+            { page: 2, src: 'moment13.jpg', title: 'Moment 13' },
+            { page: 2, src: 'moment14.jpg', title: 'Moment 14' },
+            { page: 2, src: 'moment15.jpg', title: 'Moment 15' },
+            { page: 2, src: 'moment16.jpg', title: 'Moment 16' },
+            { page: 2, src: 'moment17.jpg', title: 'Moment 17' },
+            { page: 2, src: 'moment18.jpg', title: 'Moment 18' },
+            { page: 2, src: 'moment19.jpg', title: 'Moment 19' },
+            { page: 2, src: 'moment20.jpg', title: 'Moment 20' },
+            { page: 2, src: 'moment21.jpg', title: 'Moment 21' },
+            { page: 2, src: 'moment22.jpg', title: 'Moment 22' },
+            { page: 2, src: 'moment23.jpg', title: 'Moment 23' },
+            { page: 2, src: 'moment24.jpg', title: 'Moment 24' },
+            // Halaman 3
+            { page: 3, src: 'moment25.jpg', title: 'Moment 25' },
+            { page: 3, src: 'moment26.jpg', title: 'Moment 26' },
+            { page: 3, src: 'moment27.jpg', title: 'Moment 27' },
+            { page: 3, src: 'moment28.jpg', title: 'Moment 28' },
+            { page: 3, src: 'moment29.jpg', title: 'Moment 29' },
+            { page: 3, src: 'moment30.jpg', title: 'Moment 30' },
+            { page: 3, src: 'moment31.jpg', title: 'Moment 31' },
+            { page: 3, src: 'moment32.jpg', title: 'Moment 32' },
+            { page: 3, src: 'moment33.jpg', title: 'Moment 33' },
+            { page: 3, src: 'moment34.jpg', title: 'Moment 34' }
+        ];
+
+        // ==========================================
+        // 2. DATA STRUKTUR (WALI KELAS & PENGURUS)
+        // ==========================================
+        const waliKelas = { name: "Nama Wali Kelas, S.Pd.", src: "walikelas.jpg" };
+        
+        const pengurusInti = [
+            { role: "Ketua Kelas", name: "Nama Ketua", src: "ketua.jpg" },
+            { role: "Wakil Ketua", name: "Nama Wakil", src: "wakil.jpg" },
+            { role: "Sekretaris", name: "Nama Sekretaris", src: "sekretaris.jpg" },
+            { role: "Bendahara", name: "Nama Bendahara", src: "bendahara.jpg" }
+        ];
+
+        // ==========================================
+        // 3. DATA 34 SISWA (GANTI NAMA DI SINI)
+        // ==========================================
+        const studentData = [
+            { abs: "01", name: "Nama Siswa 1", src: "siswa1.jpg" },
+            { abs: "02", name: "Nama Siswa 2", src: "siswa2.jpg" },
+            { abs: "03", name: "Nama Siswa 3", src: "siswa3.jpg" },
+            { abs: "04", name: "Nama Siswa 4", src: "siswa4.jpg" },
+            { abs: "05", name: "Nama Siswa 5", src: "siswa5.jpg" },
+            { abs: "06", name: "Nama Siswa 6", src: "siswa6.jpg" },
+            { abs: "07", name: "Nama Siswa 7", src: "siswa7.jpg" },
+            { abs: "08", name: "Nama Siswa 8", src: "siswa8.jpg" },
+            { abs: "09", name: "Nama Siswa 9", src: "siswa9.jpg" },
+            { abs: "10", name: "Nama Siswa 10", src: "siswa10.jpg" },
+            { abs: "11", name: "Nama Siswa 11", src: "siswa11.jpg" },
+            { abs: "12", name: "Nama Siswa 12", src: "siswa12.jpg" },
+            { abs: "13", name: "Nama Siswa 13", src: "siswa13.jpg" },
+            { abs: "14", name: "Nama Siswa 14", src: "siswa14.jpg" },
+            { abs: "15", name: "Nama Siswa 15", src: "siswa15.jpg" },
+            { abs: "16", name: "Nama Siswa 16", src: "siswa16.jpg" },
+            { abs: "17", name: "Nama Siswa 17", src: "siswa17.jpg" },
+            { abs: "18", name: "Nama Siswa 18", src: "siswa18.jpg" },
+            { abs: "19", name: "Nama Siswa 19", src: "siswa19.jpg" },
+            { abs: "20", name: "Nama Siswa 20", src: "siswa20.jpg" },
+            { abs: "21", name: "Nama Siswa 21", src: "siswa21.jpg" },
+            { abs: "22", name: "Nama Siswa 22", src: "siswa22.jpg" },
+            { abs: "23", name: "Nama Siswa 23", src: "siswa23.jpg" },
+            { abs: "24", name: "Nama Siswa 24", src: "siswa24.jpg" },
+            { abs: "25", name: "Nama Siswa 25", src: "siswa25.jpg" },
+            { abs: "26", name: "Nama Siswa 26", src: "siswa26.jpg" },
+            { abs: "27", name: "Nama Siswa 27", src: "siswa27.jpg" },
+            { abs: "28", name: "Nama Siswa 28", src: "siswa28.jpg" },
+            { abs: "29", name: "Nama Siswa 29", src: "siswa29.jpg" },
+            { abs: "30", name: "Nama Siswa 30", src: "siswa30.jpg" },
+            { abs: "31", name: "Nama Siswa 31", src: "siswa31.jpg" },
+            { abs: "32", name: "Nama Siswa 32", src: "siswa32.jpg" },
+            { abs: "33", name: "Nama Siswa 33", src: "siswa33.jpg" },
+            { abs: "34", name: "Nama Siswa 34", src: "siswa34.jpg" }
+        ];
+
+        // LOGIKA AUTOMATION (JANGAN DIUBAH)
+        function renderGallery(page) {
+            const wrapper = document.getElementById('gallery-wrapper');
+            wrapper.innerHTML = '';
+            galleryData.filter(p => p.page === page).forEach(photo => {
+                wrapper.innerHTML += `<div class="relative overflow-hidden rounded-2xl aspect-square glass group border border-white/5">
+                    <img src="${photo.src}" onerror="this.src='https://via.placeholder.com/500?text=${photo.title}'" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition duration-500 group-hover:scale-110">
+                </div>`;
+            });
+            document.querySelectorAll('.page-nav').forEach(b => b.classList.remove('active-page'));
+            document.getElementById('btn-'+page).classList.add('active-page');
+        }
+
+        function initStructure() {
+            document.getElementById('wali-kelas-container').innerHTML = `<div class="text-center group">
+                <div class="w-40 h-40 mx-auto mb-4 rounded-full border-4 border-emerald-500 p-1 glass overflow-hidden">
+                    <img src="${waliKelas.src}" onerror="this.src='https://via.placeholder.com/150?text=Wali+Kelas'" class="w-full h-full object-cover rounded-full">
+                </div>
+                <h3 class="text-2xl font-bold">${waliKelas.name}</h3>
+                <p class="text-emerald-400 font-medium uppercase">Wali Kelas</p>
+            </div>`;
+
+            pengurusInti.forEach(p => {
+                document.getElementById('pengurus-inti').innerHTML += `<div>
+                    <div class="w-24 h-24 mx-auto mb-3 rounded-2xl glass overflow-hidden border border-blue-500/30">
+                        <img src="${p.src}" onerror="this.src='https://via.placeholder.com/150?text=${p.role}'" class="w-full h-full object-cover">
+                    </div>
+                    <h4 class="font-bold">${p.role}</h4>
+                    <p class="text-slate-400 text-xs">${p.name}</p>
+                </div>`;
+            });
+
+            studentData.forEach(s => {
+                document.getElementById('student-list').innerHTML += `<div class="group text-center">
+                    <div class="aspect-[3/4] rounded-xl glass overflow-hidden mb-2 border border-white/5 group-hover:border-blue-500/50">
+                        <img src="${s.src}" onerror="this.src='https://via.placeholder.com/150?text=${s.abs}'" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition duration-500">
+                    </div>
+                    <p class="text-[10px] text-slate-500 uppercase tracking-tighter">Absen ${s.abs}</p>
+                    <p class="text-[12px] font-medium truncate uppercase px-1">${s.name}</p>
+                </div>`;
+            });
+        }
+
+        renderGallery(1);
+        initStructure();
+    </script>
+</body>
+</html>
